@@ -6,7 +6,9 @@
 
 {% block content %}
 <h1>Inscrivez-vous maintenant</h1>
-<button class="btn btn-submit">S'inscrire</button>
+<form action="{% url 'accounts:signup' %}">
+    <button class="btn btn-submit">S'inscrire</button>
+</form>
 
 <h1>Connectez-vous</h1>
 <form method="POST">
