@@ -11,6 +11,3 @@ class SignUpView(CreateView):
     form_class = CustomUserCreationForm
     template_name = "accounts/signup.html"
     success_url = reverse_lazy("accounts:login")
-
-def login(request):
-    return HttpResponse("<h1>Bienvenue</h1>")
