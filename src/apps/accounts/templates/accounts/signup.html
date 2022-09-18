@@ -8,6 +8,8 @@
 <form method="POST">
     {% csrf_token %}
     {{ form.as_p }}
+    <button class="btn btn-submit">Revenir en arrière</button>
     <input type="submit" value="S'incrire">
+
 </form>
 {% endblock %}
