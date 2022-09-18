@@ -5,10 +5,17 @@ from django.core.validators import MinValueValidator, MaxValueValidator
 
 class Ticket(models.Model):
     title = models.fields.CharField(max_length=128)
-    description = models.fields.TextField(max_length=2048, blanc=True)
+    description = models.fields.TextField(max_length=2048, blank=True)
     image = models.ImageField(null=True, blank=True)
     user = models.ForeignKey(to=settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     time_created = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        verbose_name = "Ticket"
+        ordering = ["-time_created"]
+
+    def __str__(self):
+        return self.title
 
 
 class Review(models.Model):
@@ -21,6 +28,13 @@ class Review(models.Model):
     body = models.CharField(max_length=8192, blank=True)
     user = models.ForeignKey(to=settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     time_created = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        verbose_name = "Critique"
+        ordering = ["-time_created"]
+
+    def __str__(self):
+        return self.headline
 
 
 class UserFollows(models.Model):
@@ -40,3 +54,4 @@ class UserFollows(models.Model):
             "user",
             "followed_user",
         )
+        verbose_name = "Abonné"
