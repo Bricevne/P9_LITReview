@@ -1,4 +1,6 @@
-from django.contrib.auth.forms import UserCreationForm, UserChangeForm
+from django.contrib.auth.forms import UserCreationForm, UserChangeForm, PasswordChangeForm
+from django.contrib.auth.views import PasswordChangeView
+from django.urls import reverse_lazy
 from apps.accounts.models import CustomUser
 
 
@@ -16,3 +18,9 @@ class CustomUserChangeForm(UserChangeForm):
         model = CustomUser
         fields = UserChangeForm.Meta.fields
         fields = ("username",)
+
+
+class PasswordsChangeView(PasswordChangeView):
+    """CustomUserChangeForm class."""
+    from_class = PasswordChangeForm
+    success_url = reverse_lazy('accounts:password_change_completed')

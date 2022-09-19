@@ -9,6 +9,7 @@
 <body>
 <nav>
     {% if user.is_authenticated %}
+    <a href="{% url 'reviews:flux' %}">Flux</a>
     <a href="{% url 'accounts:profile' %}">Profil</a>
     <a href="{% url 'accounts:logout' %}">Se déconnecter</a>
     {% endif %}
