@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block title %}
+  <title>Ajouter une critique</title>
+{% endblock %}
+
+{% block content %}
+
+  <h1>Ajouter une critique</h1>
+
+  <form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Ajouter" class="btn btn-submit">
+  </form>
+
+{% endblock %}

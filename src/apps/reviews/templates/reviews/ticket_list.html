@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{% block title %}
+<title>Flux</title>
+{% endblock title %}
+
+{% block content %}
+
+<h1>Flux</h1>
+<form action="{% url 'reviews:ticket-create' %}">
+    <button class="btn btn-submit">Demander une critique</button>
+</form>
+<form action="{% url 'reviews:review-create' %}">
+    <button class="btn btn-submit">Créer une critique</button>
+</form>
+
+{% for review in reviews %}
+{% if review.user == user %}
+    <h1>Vous avez posté une critique.</h1>
+{% else %}
+    <h1>{{ review.user }} a posté une critique.</h1>
+{% endif %}
+    <h1>{{ review.headline }}</h1>
+    <p>{{ review.time_created }}</p>
+    <p>{{ review.rating }}</p>
+
+    <p>{{ review.body }}</p>
+            <p>---------</p>
+    <h3>Ticket - {{ review.ticket.user }}</h3>
+    <h3>{{ review.ticket.title }}</h3>
+    <p>{{ review.ticket.description }}</p>
+            <p>---------</p>
+<hr>
+{% endfor %}
+
+{% for ticket in tickets %}
+    {% if ticket not in reviews_tickets %}
+        {% if ticket.user == user %}
+            <h1>Vous avez demandé une critique.</h1>
+        {% else %}
+            <h1>{{ ticket.user }} a demandé une critique.</h1>
+        {% endif %}
+            <h1>Ticket - {{ ticket.user }}</h1>
+            <h1>{{ ticket.title }}</h1>
+            <p>{{ ticket.description }}</p>
+            <p>{{ ticket.time_created }}</p>
+
+                    <form action="{% url 'reviews:review-create-ticket' ticket.id %}">
+                        <button class="btn btn-submit">Créer une critique</button>
+                    </form>
+<hr>
+    {% endif %}
+{% endfor %}
+{% endblock content %}
