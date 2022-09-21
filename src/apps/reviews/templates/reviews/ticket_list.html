@@ -1,54 +1,51 @@
 {% extends 'base.html' %}
-
+{% load reviews_extras %}
 {% block title %}
 <title>Flux</title>
 {% endblock title %}
 
 {% block content %}
-
 <h1>Flux</h1>
 <form action="{% url 'reviews:ticket-create' %}">
     <button class="btn btn-submit">Demander une critique</button>
 </form>
-<form action="{% url 'reviews:review-create' %}">
-    <button class="btn btn-submit">Créer une critique</button>
-</form>
 
-{% for review in reviews %}
-{% if review.user == user %}
-    <h1>Vous avez posté une critique.</h1>
-{% else %}
-    <h1>{{ review.user }} a posté une critique.</h1>
-{% endif %}
-    <h1>{{ review.headline }}</h1>
-    <p>{{ review.time_created }}</p>
-    <p>{{ review.rating }}</p>
+{% for instance in tickets_and_reviews %}
+    {% if instance|model_type == 'Review' %}
+        <p>-------------------------------------</p>
+            {% if instance.user == user %}
+                <h1>Vous avez posté une critique.</h1>
+            {% else %}
+                <h1>{{ instance.user }} a posté une critique.</h1>
+            {% endif %}
+            <h3>{{ instance.headline }}</h3>
+            <p>{{ instance.time_created }}</p>
+            <p>{{ instance.rating }}</p>
 
-    <p>{{ review.body }}</p>
-            <p>---------</p>
-    <h3>Ticket - {{ review.ticket.user }}</h3>
-    <h3>{{ review.ticket.title }}</h3>
-    <p>{{ review.ticket.description }}</p>
-            <p>---------</p>
-<hr>
-{% endfor %}
+            <p>{{ instance.body }}</p>
+        <p>-------------------------------------</p>
 
-{% for ticket in tickets %}
-    {% if ticket not in reviews_tickets %}
-        {% if ticket.user == user %}
-            <h1>Vous avez demandé une critique.</h1>
-        {% else %}
-            <h1>{{ ticket.user }} a demandé une critique.</h1>
-        {% endif %}
-            <h1>Ticket - {{ ticket.user }}</h1>
-            <h1>{{ ticket.title }}</h1>
-            <p>{{ ticket.description }}</p>
-            <p>{{ ticket.time_created }}</p>
+        <h1>Ticket - {{ instance.ticket.user }}</h1>
+        <h1>{{ instance.ticket.title }}</h1>
+        <p>{{ instance.ticket.description }}</p>
+        <hr>
 
-                    <form action="{% url 'reviews:review-create-ticket' ticket.id %}">
-                        <button class="btn btn-submit">Créer une critique</button>
-                    </form>
-<hr>
+    {% elif instance|model_type == 'Ticket' and instance not in reviews_tickets %}
+
+            {% if instance.user == user %}
+                <h1>Vous avez demandé une critique.</h1>
+            {% else %}
+                <h1>{{ instance.user }} a demandé une critique.</h1>
+            {% endif %}
+            <h1>{{ instance.title }}</h1>
+            <p>{{ instance.time_created }}</p>
+            <p>{{ instance.description }}</p>
+            <form action="{% url 'reviews:review-create' instance.id %}">
+                <button class="btn btn-submit">Créer une critique</button>
+            </form>
+        <hr>
+
     {% endif %}
+
 {% endfor %}
 {% endblock content %}
