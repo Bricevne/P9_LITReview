@@ -13,39 +13,26 @@
 {% for instance in tickets_and_reviews %}
     {% if instance|model_type == 'Review' %}
         <p>-------------------------------------</p>
-            {% if instance.user == user %}
-                <h1>Vous avez posté une critique.</h1>
-            {% else %}
-                <h1>{{ instance.user }} a posté une critique.</h1>
-            {% endif %}
+            <h1>{% get_poster_display instance.user %} posté une critique.</h1>
             <h3>{{ instance.headline }}</h3>
-            <p>{{ instance.time_created }}</p>
+            <p>{{ instance.time_created|get_posted_at_display }}</p>
             <p>{{ instance.rating }}</p>
 
             <p>{{ instance.body }}</p>
         <p>-------------------------------------</p>
 
         <h1>Ticket - {{ instance.ticket.user }}</h1>
-        <h1>{{ instance.ticket.title }}</h1>
-        <p>{{ instance.ticket.description }}</p>
-        <hr>
+        {% include "reviews/partials/ticket_snippet.html" with ticket=instance.ticket %}
 
     {% elif instance|model_type == 'Ticket' and instance not in reviews_tickets %}
 
-            {% if instance.user == user %}
-                <h1>Vous avez demandé une critique.</h1>
-            {% else %}
-                <h1>{{ instance.user }} a demandé une critique.</h1>
-            {% endif %}
-            <h1>{{ instance.title }}</h1>
-            <p>{{ instance.time_created }}</p>
-            <p>{{ instance.description }}</p>
+            <h1>{% get_poster_display instance.user %} demandé une critique.</h1>
+            {% include "reviews/partials/ticket_snippet.html" with ticket=instance %}
             <form action="{% url 'reviews:review-create' instance.id %}">
                 <button class="btn btn-submit">Créer une critique</button>
             </form>
-        <hr>
+            <hr>
 
     {% endif %}
-
 {% endfor %}
 {% endblock content %}
