@@ -37,7 +37,7 @@ class TicketCreate(CreateView):
     model = Ticket
     template_name = "reviews/ticket_create.html"
     fields = ['title', 'description', 'image']
-    success_url = reverse_lazy("reviews:flux")
+    success_url = reverse_lazy("reviews:feed")
 
     def form_valid(self, form):
         form.instance.user = self.request.user
@@ -57,7 +57,7 @@ class TicketUpdate(UpdateView):
     context_object_name = "ticket"
     fields = ['title', 'description', 'image']
     template_name = "reviews/ticket_update.html"
-    success_url = reverse_lazy("reviews:flux")
+    success_url = reverse_lazy("reviews:feed")
 
 
 @method_decorator(login_required, name='dispatch')
@@ -65,7 +65,7 @@ class ReviewCreate(CreateView):
     model = Review
     template_name = "reviews/review_create.html"
     fields = ['headline', 'rating', 'body']
-    success_url = reverse_lazy("reviews:flux")
+    success_url = reverse_lazy("reviews:feed")
 
     def form_valid(self, form):
         form.instance.user = self.request.user
@@ -94,7 +94,7 @@ class ReviewCreate(CreateView):
 #                         review.ticket = ticket
 #                         ticket.save()
 #                         review.save()
-#                         return reverse('reviews:flux')
+#                         return reverse('reviews:feed')
 #     context = {
 #         'ticket_form': ticket_form,
 #         'review_form': review_form,

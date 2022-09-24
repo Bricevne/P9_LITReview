@@ -4,7 +4,7 @@ from apps.reviews.views import IndexList, TicketCreate, ReviewCreate, TicketDeta
 app_name = "reviews"
 
 urlpatterns = [
-    path("", IndexList.as_view(), name="flux"),
+    path("", IndexList.as_view(), name="feed"),
     path("tickets/create/", TicketCreate.as_view(), name="ticket-create"),
     path("tickets/<int:pk>/", TicketDetail.as_view(), name="ticket-detail"),
     path("tickets/<int:pk>/update", TicketUpdate.as_view(), name="ticket-update"),
