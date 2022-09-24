@@ -1,14 +1,11 @@
-from itertools import chain
-
 from django.contrib.auth.decorators import login_required
-from django.db import transaction
-from django.shortcuts import get_object_or_404, render
-from django.urls import reverse_lazy, reverse
+from django.shortcuts import get_object_or_404
+from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
 from django.views.generic import ListView, CreateView, DetailView, UpdateView
 
-# from apps.reviews.forms import TicketForm, ReviewForm
 from apps.reviews.models import Ticket, Review
+from itertools import chain
 
 
 @method_decorator(login_required, name='dispatch')
