@@ -1,5 +1,5 @@
 from django.contrib import admin
-from apps.followers.models import UserFollows
+from apps.subscriptions.models import UserFollows
 
 
 @admin.register(UserFollows)
