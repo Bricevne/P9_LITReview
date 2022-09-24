@@ -1,0 +1,9 @@
+<div class="ticket">
+    <a href="{% url 'reviews:ticket-detail' ticket.id %}">
+    <h1>{{ ticket.title }}</h1>
+    <p>{{ ticket.description|linebreaks|safe }}</p>
+    {% if ticket.image %}
+      <img src="{{ ticket.image.url }}" alt="L'image de l'article">
+    {% endif %}
+    </a>
+</div>
