@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     # My apps
     "apps.accounts",
     "apps.reviews",
+    "apps.subscriptions",
 ]
 
 MIDDLEWARE = [
