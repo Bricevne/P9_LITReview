@@ -74,6 +74,21 @@ class ReviewCreate(CreateView):
         return super().form_valid(form)
 
 
+@method_decorator(login_required, name='dispatch')
+class ReviewDetail(DetailView):
+    model = Review
+    context_object_name = "review"
+    template_name = "reviews/review_detail.html"
+
+
+@method_decorator(login_required, name='dispatch')
+class ReviewUpdate(UpdateView):
+    model = Review
+    context_object_name = "review"
+    fields = ['headline', 'rating', 'body']
+    template_name = "reviews/review_update.html"
+    success_url = reverse_lazy("reviews:feed")
+
 
 
 # @login_required

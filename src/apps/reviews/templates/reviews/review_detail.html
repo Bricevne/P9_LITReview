@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block title %}
+<title>{{ review.headline }}</title>
+{% endblock %}
+
+{% block content %}
+<p>{{ review.headline }}</p>
+<a href="{% url 'reviews:review-update' review.id %}">Modifier</a>
+
+{% endblock %}

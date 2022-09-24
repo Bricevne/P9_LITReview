@@ -1,9 +1,11 @@
+{% load reviews_extras %}
 <div class="ticket">
     <a href="{% url 'reviews:ticket-detail' ticket.id %}">
-    <h1>{{ ticket.title }}</h1>
-    <p>{{ ticket.description|linebreaks|safe }}</p>
-    {% if ticket.image %}
-      <img src="{{ ticket.image.url }}" alt="L'image de l'article">
-    {% endif %}
+        <h1>{{ ticket.title }}</h1>
+        <p>{{ ticket.time_created|get_posted_at_display }}</p>
+        <p>{{ ticket.description|linebreaks|safe }}</p>
+        {% if ticket.image %}
+        <img src="{{ ticket.image.url }}" alt="L'image de l'article">
+        {% endif %}
     </a>
 </div>

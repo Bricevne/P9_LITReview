@@ -1,0 +1,9 @@
+{% load reviews_extras %}
+<div class="review">
+    <a href="{% url 'reviews:review-detail' review.id %}">
+        <h1>{{ review.headline }}</h1>
+        <p>{{ review.time_created|get_posted_at_display }}</p>
+        <p>{{ review.rating }}</p>
+        <p>{{ review.body }}</p>
+    </a>
+</div>
