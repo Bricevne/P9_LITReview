@@ -1,0 +1,7 @@
+<div class="following">
+    <h1>Abonnements</h1>
+    {% for subscription in subscriptions %}
+    <p>{{ subscription.followed_user.username }}</p>
+    <a href="{% url 'subscriptions:followers-delete' subscription.id %}">Se désabonner</a>
+    {% endfor %}
+</div>

@@ -1,0 +1,6 @@
+<div class="followed_by">
+    <h1>Abonnés</h1>
+    {% for subscription in followed_subscriptions %}
+    <p>{{ subscription.user.username }}</p>
+    {% endfor %}
+</div>

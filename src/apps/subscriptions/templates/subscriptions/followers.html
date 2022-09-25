@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block title %}
+  <title>Abonnements</title>
+{% endblock %}
+
+{% block content %}
+
+  <h1>Suivre d'autres utilisateurs</h1>
+
+  <form method="POST">
+    {% csrf_token %}
+    {{ form }}
+    <input type="submit" value="Ajouter" class="btn btn-submit">
+  </form>
+
+  {% include "subscriptions/partials/following_snippet.html" with subscriptions=subscriptions %}
+  {% include "subscriptions/partials/followed_by_snippet.html" with followed_subscriptions=followed_subscriptions %}
+
+{% endblock %}

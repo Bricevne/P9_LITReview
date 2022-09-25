@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block title %}
+  <title>Se désabonner</title>
+{% endblock %}
+
+{% block content %}
+
+  <form method="POST">
+    {% csrf_token %}
+    <p>Etes-vous sûr de vouloir supprimer ?</p>
+    <input type="submit" value="Oui, supprimer" class="btn btn-delete">
+  </form>
+
+{% endblock %}
