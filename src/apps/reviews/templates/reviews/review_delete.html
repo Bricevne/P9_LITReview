@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block title %}
+  <title>Supprimer</title>
+{% endblock %}
+
+{% block content %}
+
+  <form method="POST">
+    {% csrf_token %}
+    <p>Etes-vous sûr de vouloir supprimer la critique "{{ review.headline }}" ?</p>
+    <input type="submit" value="Oui, supprimer" class="btn btn-delete">
+  </form>
+
+{% endblock %}

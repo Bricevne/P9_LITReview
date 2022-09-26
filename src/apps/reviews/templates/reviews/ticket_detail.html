@@ -7,7 +7,10 @@
 {% block content %}
 
     <h1>{{ ticket.title }}</h1>
-    <a href="{% url 'reviews:ticket-update' ticket.id %}">Modifier</a>
+    {% if user == ticket.user %}
+        <a href="{% url 'reviews:ticket-update' ticket.id %}">Modifier</a>
+        <a href="{% url 'reviews:ticket-delete' ticket.id %}">Supprimer</a>
+    {% endif %}
     <p>{{ ticket.description|linebreaks|safe }}</p>
     {% if ticket.image %}
       <img src="{{ ticket.image.url }}" alt="L'image de l'article">

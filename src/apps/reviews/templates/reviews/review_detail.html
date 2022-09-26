@@ -1,11 +1,13 @@
 {% extends 'base.html' %}
 
 {% block title %}
-<title>{{ review.headline }}</title>
+    <title>{{ review.headline }}</title>
 {% endblock %}
 
 {% block content %}
-<p>{{ review.headline }}</p>
-<a href="{% url 'reviews:review-update' review.id %}">Modifier</a>
-
+    <p>{{ review.headline }}</p>
+        {% if user == review.user %}
+    <a href="{% url 'reviews:review-update' review.id %}">Modifier</a>
+    <a href="{% url 'reviews:review-delete' review.id %}">Supprimer</a>
+    {% endif %}
 {% endblock %}

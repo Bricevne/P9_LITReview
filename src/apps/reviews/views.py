@@ -1,8 +1,8 @@
-from django.contrib.auth.decorators import login_required
-from django.shortcuts import get_object_or_404
+from django.contrib.auth.decorators import login_required, user_passes_test
+from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
-from django.views.generic import ListView, CreateView, DetailView, UpdateView
+from django.views.generic import ListView, CreateView, DetailView, UpdateView, DeleteView
 
 from apps.reviews.models import Ticket, Review
 from itertools import chain
@@ -56,6 +56,30 @@ class TicketUpdate(UpdateView):
     template_name = "reviews/ticket_update.html"
     success_url = reverse_lazy("reviews:feed")
 
+    def dispatch(self, request, *args, **kwargs):
+        handler = super().dispatch(request, *args, **kwargs)
+        user = request.user
+        ticket = self.get_object()
+        if not (ticket.user == user or user.is_superuser):
+            return redirect("reviews:feed")
+        return handler
+
+
+@method_decorator(login_required, name='dispatch')
+class TicketDelete(DeleteView):
+    model = Ticket
+    context_object_name = "ticket"
+    template_name = "reviews/ticket_delete.html"
+    success_url = reverse_lazy("reviews:feed")
+
+    def dispatch(self, request, *args, **kwargs):
+        ticket = self.get_object()
+        handler = super().dispatch(request, *args, **kwargs)
+        user = request.user
+        if not (ticket.user == user or user.is_superuser):
+            return redirect("reviews:feed")
+        return handler
+
 
 @method_decorator(login_required, name='dispatch')
 class ReviewCreate(CreateView):
@@ -66,7 +90,7 @@ class ReviewCreate(CreateView):
 
     def form_valid(self, form):
         form.instance.user = self.request.user
-        ticket = get_object_or_404(Ticket, id=self.kwargs['id'])
+        ticket = get_object_or_404(Ticket, id=self.kwargs['pk'])
         form.instance.ticket = ticket
         return super().form_valid(form)
 
@@ -86,29 +110,26 @@ class ReviewUpdate(UpdateView):
     template_name = "reviews/review_update.html"
     success_url = reverse_lazy("reviews:feed")
 
+    def dispatch(self, request, *args, **kwargs):
+        handler = super().dispatch(request, *args, **kwargs)
+        user = request.user
+        review = self.get_object()
+        if not (review.user == user or user.is_superuser):
+            return redirect("reviews:feed")
+        return handler
 
 
-# @login_required
-# def review_create(request):
-#     ticket_form = TicketForm()
-#     review_form = ReviewForm()
-#     if request.method == 'POST':
-#         if 'create_ticket' in request.POST:
-#             ticket_form = TicketForm()
-#             if ticket_form.is_valid():
-#                 ticket = ticket_form.save(commit=False)
-#                 ticket.user = request.user
-#                 if 'create_review' in request.POST:
-#                     review_form = ReviewForm(request.POST)
-#                     if review_form.is_valid():
-#                         review = review_form.save(commit=False)
-#                         review.user = request.user
-#                         review.ticket = ticket
-#                         ticket.save()
-#                         review.save()
-#                         return reverse('reviews:feed')
-#     context = {
-#         'ticket_form': ticket_form,
-#         'review_form': review_form,
-#     }
-#     return render(request, 'reviews/ticket_review_create.html', context=context)
+@method_decorator(login_required, name='dispatch')
+class ReviewDelete(DeleteView):
+    model = Review
+    context_object_name = "review"
+    template_name = "reviews/review_delete.html"
+    success_url = reverse_lazy("reviews:feed")
+
+    def dispatch(self, request, *args, **kwargs):
+        review = self.get_object()
+        handler = super().dispatch(request, *args, **kwargs)
+        user = request.user
+        if not (review.user == user or user.is_superuser):
+            return redirect("reviews:feed")
+        return handler
