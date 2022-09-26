@@ -4,7 +4,6 @@ from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
 from django.views.generic import ListView, CreateView, DetailView, UpdateView, DeleteView
 
-from apps.accounts.models import CustomUser
 from apps.reviews.models import Ticket, Review
 from itertools import chain
 
@@ -30,6 +29,29 @@ class IndexList(ListView):
         context['tickets_and_reviews'] = tickets_and_reviews
         context['tickets_with_reviews'] = [review.ticket for review in Review.objects.all()]
         context['following'] = UserFollows.objects.filter(user=user).values_list("followed_user", flat=True)
+        context['user_id'] = user.id
+
+        return context
+
+
+@method_decorator(login_required, name='dispatch')
+class PostList(ListView):
+    model = Ticket
+    template_name = "reviews/posts_list.html"
+    context_object_name = "tickets"
+
+    def get_context_data(self, **kwargs):
+        context = super(PostList, self).get_context_data(**kwargs)
+        user = self.request.user
+        tickets = Ticket.objects.filter(user=user)
+        reviews = Review.objects.filter(user=user)
+        tickets_and_reviews = sorted(
+            chain(tickets, reviews),
+            key=lambda instance: instance.time_created,
+            reverse=True
+        )
+        context['tickets_and_reviews'] = tickets_and_reviews
+        context['tickets_with_reviews'] = [review.ticket for review in Review.objects.all()]
 
         return context
 
@@ -155,3 +177,19 @@ class ReviewDelete(DeleteView):
         if not (review.user == user or user.is_superuser):
             return redirect("reviews:feed")
         return handler
+
+
+
+# @method_decorator(login_required, name='dispatch')
+# class TicketReviewCreate(CreateView):
+#     model = Review
+#     template_name = "reviews/review_create.html"
+#     fields = ['headline', 'rating', 'body']
+#     success_url = reverse_lazy("reviews:feed")
+#
+#     def form_valid(self, form):
+#         form.instance.user = self.request.user
+#         ticket = get_object_or_404(Ticket, id=self.kwargs['pk'])
+#         form.instance.ticket = ticket
+#         return super().form_valid(form)
+#

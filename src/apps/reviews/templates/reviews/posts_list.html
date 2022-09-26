@@ -5,15 +5,11 @@
 {% endblock title %}
 
 {% block content %}
-<h1>Flux</h1>
-<form action="{% url 'reviews:ticket-create' %}">
-    <button class="btn btn-submit">Demander une critique</button>
-</form>
+<h1>Vos posts</h1>
+
 
 {% for instance in tickets_and_reviews %}
     {% if instance|model_type == 'Review' %}
-    {% if instance.user.id in following or instance.ticket.user.id in following or user_id == instance.user.id or user_id == instance.ticket.user.id %}
-
         <p>-------------------------------------</p>
         <h1>{% get_poster_display instance.user %} posté une critique.</h1>
         {% include "reviews/partials/review_snippet.html" with review=instance %}
@@ -22,9 +18,8 @@
         <h1>Ticket - {{ instance.ticket.user }}</h1>
         {% include "reviews/partials/ticket_snippet.html" with ticket=instance.ticket %}
         <hr>
-    {% endif %}
+
     {% elif instance|model_type == 'Ticket' and instance not in tickets_with_reviews %}
-    {% if instance.user.id in following or user_id == instance.user.id %}
 
         <h1>{% get_poster_display instance.user %} demandé une critique.</h1>
         {% include "reviews/partials/ticket_snippet.html" with ticket=instance %}
@@ -33,7 +28,6 @@
         </form>
         <hr>
 
-    {% endif %}
     {% endif %}
 {% endfor %}
 {% endblock content %}
