@@ -14,15 +14,12 @@ class SubscriptionForm(forms.ModelForm):
         user = kwargs.pop('user')
         super(SubscriptionForm, self).__init__(*args, **kwargs)
         self.fields['followed_user'].queryset = (
-                CustomUser.objects.exclude(username=user) &
-                CustomUser.objects.exclude(
-                    id__in=(
-                        user_id for user_id in list(
-                            UserFollows.objects.filter(user__username=user).values_list("followed_user", flat=True)
-                        )
-                    )
-                )
-            )
+            CustomUser.objects.exclude(
+                Q(username=user) |
+                Q(id__in=(user_id for user_id in
+                          list(
+                              UserFollows.objects.filter(user__username=user).values_list("followed_user", flat=True)
+                          )))))
 
 
 
