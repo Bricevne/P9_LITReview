@@ -4,8 +4,11 @@ from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
 from django.views.generic import ListView, CreateView, DetailView, UpdateView, DeleteView
 
+from apps.accounts.models import CustomUser
 from apps.reviews.models import Ticket, Review
 from itertools import chain
+
+from apps.subscriptions.models import UserFollows
 
 
 @method_decorator(login_required, name='dispatch')
@@ -16,6 +19,7 @@ class IndexList(ListView):
 
     def get_context_data(self, **kwargs):
         context = super(IndexList, self).get_context_data(**kwargs)
+        user = self.request.user
         tickets = Ticket.objects.all()
         reviews = Review.objects.all()
         tickets_and_reviews = sorted(
@@ -24,7 +28,8 @@ class IndexList(ListView):
             reverse=True
         )
         context['tickets_and_reviews'] = tickets_and_reviews
-        context['reviews_tickets'] = [review.ticket for review in Review.objects.all()]
+        context['tickets_with_reviews'] = [review.ticket for review in Review.objects.all()]
+        context['following'] = UserFollows.objects.filter(user=user).values_list("followed_user", flat=True)
 
         return context
 
@@ -46,6 +51,15 @@ class TicketDetail(DetailView):
     model = Ticket
     context_object_name = "ticket"
     template_name = "reviews/ticket_detail.html"
+
+    def dispatch(self, request, *args, **kwargs):
+        handler = super().dispatch(request, *args, **kwargs)
+        user = request.user
+        ticket = self.get_object()
+        following = list(UserFollows.objects.filter(user=user).values_list("followed_user", flat=True))
+        if not (user == ticket.user or user.is_superuser or ticket.user.id in following):
+            return redirect("reviews:feed")
+        return handler
 
 
 @method_decorator(login_required, name='dispatch')
@@ -101,6 +115,14 @@ class ReviewDetail(DetailView):
     context_object_name = "review"
     template_name = "reviews/review_detail.html"
 
+    def dispatch(self, request, *args, **kwargs):
+        handler = super().dispatch(request, *args, **kwargs)
+        user = request.user
+        review = self.get_object()
+        following = list(UserFollows.objects.filter(user=user).values_list("followed_user", flat=True))
+        if not (user == review.user or user.is_superuser or review.user.id in following):
+            return redirect("reviews:feed")
+        return handler
 
 @method_decorator(login_required, name='dispatch')
 class ReviewUpdate(UpdateView):

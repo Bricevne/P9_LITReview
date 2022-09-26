@@ -11,7 +11,7 @@
 </form>
 
 {% for instance in tickets_and_reviews %}
-    {% if instance|model_type == 'Review' %}
+    {% if instance|model_type == 'Review' and instance.user.id in following or instance.ticket.user.id in following %}
         <p>-------------------------------------</p>
         <h1>{% get_poster_display instance.user %} posté une critique.</h1>
         {% include "reviews/partials/review_snippet.html" with review=instance %}
@@ -21,7 +21,7 @@
         {% include "reviews/partials/ticket_snippet.html" with ticket=instance.ticket %}
         <hr>
 
-    {% elif instance|model_type == 'Ticket' and instance not in reviews_tickets %}
+    {% elif instance|model_type == 'Ticket' and instance not in tickets_with_reviews and instance.user.id in following %}
 
         <h1>{% get_poster_display instance.user %} demandé une critique.</h1>
         {% include "reviews/partials/ticket_snippet.html" with ticket=instance %}
