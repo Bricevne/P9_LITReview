@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "active_link",
+    "crispy_forms",
     # My apps
     "apps.accounts",
     "apps.reviews",
@@ -130,3 +131,5 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 AUTH_USER_MODEL = "accounts.CustomUser"
 LOGIN_REDIRECT_URL = "reviews:feed"
 LOGOUT_REDIRECT_URL = "accounts:login"
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
