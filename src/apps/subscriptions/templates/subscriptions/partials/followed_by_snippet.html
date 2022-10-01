@@ -1,6 +1,9 @@
-<div class="followed_by">
-    <h1>Abonnés</h1>
-    {% for subscription in followed_subscriptions %}
-    <p>{{ subscription.user.username }}</p>
-    {% endfor %}
+<h2 class="text-center my-4">Abonnés</h2>
+{% for subscription in followed_subscriptions %}
+<div class="row py-2 px-3 border no-gutters">
+    <div class="col">
+        <p class="my-0">{{ subscription.user.username }}</p>
+    </div>
+
 </div>
+{% endfor %}

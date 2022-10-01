@@ -1,20 +1,25 @@
 {% extends 'base.html' %}
+{% load crispy_forms_tags %}
 
 {% block title %}
-  <title>Abonnements</title>
+<title>Abonnements</title>
 {% endblock %}
 
 {% block content %}
+<div class="container h-100">
+    <h2 class="text-center my-3">Suivre d'autres utilisateurs</h2>
+    <div class="row align-items-center justify-content-center">
+        <div class="col">
+            <form method="POST">
+                {% csrf_token %}
+                {{ form|crispy }}
+                <button type="submit" class="btn btn-primary w-25 mt-2">Ajouter</button>
+            </form>
+        </div>
+    </div>
+    {% include "subscriptions/partials/following_snippet.html" with subscriptions=subscriptions %}
+    {% include "subscriptions/partials/followed_by_snippet.html" with followed_subscriptions=followed_subscriptions %}
+</div>
 
-  <h1>Suivre d'autres utilisateurs</h1>
-
-  <form method="POST">
-    {% csrf_token %}
-    {{ form }}
-    <input type="submit" value="Ajouter" class="btn btn-submit">
-  </form>
-
-  {% include "subscriptions/partials/following_snippet.html" with subscriptions=subscriptions %}
-  {% include "subscriptions/partials/followed_by_snippet.html" with followed_subscriptions=followed_subscriptions %}
 
 {% endblock %}

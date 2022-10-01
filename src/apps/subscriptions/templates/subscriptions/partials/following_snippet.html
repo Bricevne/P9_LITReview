@@ -1,7 +1,11 @@
-<div class="following">
-    <h1>Abonnements</h1>
-    {% for subscription in subscriptions %}
-    <p>{{ subscription.followed_user.username }}</p>
-    <a href="{% url 'subscriptions:followers-delete' subscription.id %}">Se désabonner</a>
-    {% endfor %}
+<h2 class="text-center my-4">Abonnements</h2>
+{% for subscription in subscriptions %}
+<div class="row py-2 px-3 border no-gutters justify-content-between">
+    <div class="col-6">
+        <p class="my-0">{{ subscription.followed_user.username }}</p>
+    </div>
+    <div class="col-6 text-right">
+        <a href="{% url 'subscriptions:followers-delete' subscription.id %}">Se désabonner</a>
+    </div>
 </div>
+{% endfor %}

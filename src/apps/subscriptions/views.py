@@ -36,3 +36,4 @@ class SubscriptionDelete(DeleteView):
     template_name = "subscriptions/followers_delete.html"
     success_url = reverse_lazy("subscriptions:followers")
     model = UserFollows
+    context_object_name = "user_follows"
