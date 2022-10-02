@@ -2,11 +2,13 @@
 <div class="card border-primary border-strong shadow w-75 mx-auto my-4">
     <div class="card-body">
 
-        <h2>{% get_poster_display review.user %} posté une critique.</h2>
+        <h4>{% get_poster_display review.user %} posté une critique.</h4>
         <hr>
-        <h5 class="card-title px-4">{{ review.headline }} - {{ review.rating }}</h5>
-        <p class="card-text px-4">{{ review.body }}</p>
-
+        <h2 class="card-title px-4">{{ review.headline }} - {{ review.rating }}</h2>
+        <p class="card-text px-4">{{ review.body|truncatewords:50 }}</p>
+        <div class="px-4">
+            <a href="{% url 'reviews:review-detail' review.id %}" class="btn btn-primary">Lire la critique</a>
+        </div>
         <div class="mt-5">
             {% include "reviews/partials/ticket_snippet.html" with ticket=review.ticket %}
         </div>

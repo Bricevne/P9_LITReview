@@ -3,25 +3,35 @@
     <div class="card-body">
 
         {% if not ticket.related_reviews.first %}
-            <h4>{% get_poster_display instance.user %} demandé une critique.</h4>
-            <hr>
+        <h4>{% get_poster_display ticket.user %} demandé une critique.</h4>
+        <hr>
         {% else %}
-            <h4 class="card-header text-center">Ticket - {{ ticket.user }}</h4>
+        <h4 class="card-header text-center">Ticket - {{ ticket.user }}</h4>
         {% endif %}
 
         <h2 class="card-title mt-4">{{ ticket.title }}</h2>
-        <p class="card-text">{{ ticket.description|linebreaks|safe }}</p>
+        <p class="card-text">{{ ticket.description|linebreaks|safe|truncatewords:20 }}</p>
         {% if ticket.image %}
-            <img class="card-img-bottom" src="{{ ticket.image.url }}" alt="L'image du ticket">
+        <div class="text-center my-4">
+            <img src="{{ ticket.image.url }}" alt="L'image du ticket" height="200" width="150">
+        </div>
         {% endif %}
         {% if not ticket.related_reviews.first %}
-            <div class="text-right">
-                <a href="{% url 'reviews:review-create' instance.id %}" class="btn btn-primary w-25 my-2">Créer une critique</a>
+        <div class="row">
+            <div class="col-6">
+                <a href="{% url 'reviews:ticket-detail' ticket.id %}" class="btn btn-primary w-50 my-2">Lire le
+                    ticket</a>
             </div>
-            <div class="card-footer text-center text-muted">
-                {{ ticket.time_created|get_posted_at_display }}
+            <div class="col-6 text-right">
+                <a href="{% url 'reviews:review-create' ticket.id %}" class="btn btn-primary w-50 my-2">Créer une
+                    critique</a>
             </div>
+
+        </div>
+        <div class="card-footer text-center text-muted">
+            {{ ticket.time_created|get_posted_at_display }}
+        </div>
         {% endif %}
-<!--        <a href="{% url 'reviews:ticket-detail' ticket.id %}"></a>-->
+        <!--        <a href="{% url 'reviews:ticket-detail' ticket.id %}"></a>-->
     </div>
 </div>
