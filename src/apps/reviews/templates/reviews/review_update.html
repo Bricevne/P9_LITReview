@@ -1,18 +1,38 @@
 {% extends 'base.html' %}
+{% load crispy_forms_tags %}
 
 {% block title %}
-  <title>Modifier votre critique</title>
+<title>Modifier votre critique</title>
 {% endblock %}
 
 {% block content %}
 
-  <h1>Modifier votre critique</h1>
-  <p>Vous êtes en train de poster en réponse à</p>
-  {% include "reviews/partials/ticket_snippet.html" with ticket=review.ticket %}
-  <form method="POST">
-    {% csrf_token %}
-    {{ form }}
-    <input type="submit" value="Editer" class="btn btn-submit">
-  </form>
+<div class="container h-100">
+    <div class="row align-items-center justify-content-center mx-auto">
+        <div class="col-12 mt-4">
+            <h2 class="text-center mb-4">Modifier une critique</h2>
+            <p class="text-center">Vous êtes en train de poster en réponse à:</p>
+            {% include "reviews/partials/ticket_snippet.html" with ticket=review.ticket %}
+        </div>
+    </div>
+    <div class="row h-100 w-50 align-items-center justify-content-center mx-auto">
+        <div class="col-12 mt-4">
+            <h2 class="text-center mb-4">Modifier votre critique</h2>
+            <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ form|crispy }}
+                <div class="row mt-2 mb-4">
+                    <div class="col-6 ">
+                        <button type="submit" class="btn btn-primary w-75 mt-2">Confirmer</button>
+                    </div>
+                    <div class="col-6 text-right">
+                        <a href="{% url 'reviews:review-detail' review.id %}"
+                           class="btn btn-primary w-75 mt-2">Retour</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 
 {% endblock %}

@@ -6,8 +6,8 @@
 {% endblock %}
 
 {% block content %}
-<div class="container h-75">
-    <div class="row h-100 align-items-center justify-content-center">
+<div class="container">
+    <div class="row align-items-center justify-content-center">
         <div class="col-12">
             <h1 class="text-center mt-4">Ticket - {{ ticket.title }}</h1>
             <div class="text-center mt-3 mb-4">
@@ -18,18 +18,31 @@
                 <a href="{% url 'reviews:ticket-delete' ticket.id %}" class="text-danger">[Supprimer]</a>
                 {% endif %}
             </div>
-            <div class="row h-100 justify-content-center mt-5">
-                <div class="col-12 col-lg-8 mb-3">
-                    <p class="text-justify mr-3">{{ ticket.description|linebreaksbr|safe }}</p>
-                    <p class="text-muted font-italic">{{ ticket.time_created|get_posted_at_display }}</p>
+        </div>
+        <div class="row w-100 justify-content-center mt-5">
+            <div class="col-12 w-100 col-lg-8 mb-3">
+                <p class="text-justify mr-3">{{ ticket.description|linebreaksbr|safe }}</p>
+                <p class="text-muted font-italic">{{ ticket.time_created|get_posted_at_display }}</p>
+                <div class="row justify-content-center">
+                    <div class="col-12 w-100 col-lg-6 text-center text-lg-left">
+                        {% if not ticket.related_reviews.first %}
+                        <a href="{% url 'reviews:review-create' ticket.id %}" class="btn btn-primary btn-submit mt-3">Créer
+                            une critique</a>
+                        {% endif %}
+                    </div>
+                    <div class="col-12 col-lg-6 w-50 text-center text-lg-right">
+                        <a href="{% url 'reviews:feed' %}" class="btn btn-primary btn-submit w-25 mt-3">Retour</a>
+                    </div>
                 </div>
-                <div class="col-12 col-lg-4 text-center">
-                    {% if ticket.image %}
-                    <img src="{{ ticket.image.url }}" alt="L'image du ticket" height="400" width="300">
-                    {% endif %}
-                </div>
+            </div>
+
+            <div class="col-12 col-lg-4 text-center">
+                {% if ticket.image %}
+                <img src="{{ ticket.image.url }}" alt="L'image du ticket" height="400" width="300">
+                {% endif %}
             </div>
         </div>
     </div>
 </div>
+
 {% endblock %}

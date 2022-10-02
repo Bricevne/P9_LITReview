@@ -1,13 +1,42 @@
 {% extends 'base.html' %}
+{% load reviews_extras %}
 
 {% block title %}
-    <title>{{ review.headline }}</title>
+<title>{{ review.headline }}</title>
 {% endblock %}
 
 {% block content %}
-    <p>{{ review.headline }}</p>
-        {% if user == review.user %}
-    <a href="{% url 'reviews:review-update' review.id %}">Modifier</a>
-    <a href="{% url 'reviews:review-delete' review.id %}">Supprimer</a>
-    {% endif %}
+<div class="container h-100">
+    <div class="row align-items-center justify-content-center mx-auto">
+        <div class="col-12 mt-4">
+            {% include "reviews/partials/ticket_snippet.html" with ticket=review.ticket %}
+        </div>
+    </div>
+    <div class="row align-items-center justify-content-center mx-auto">
+        <div class="col-12">
+            <div class="row h-100 align-items-center justify-content-center">
+                <div class="col-12">
+                    <h1 class="text-center mt-4">Critique - {{ review.headline }}</h1>
+                    <div class="text-center mt-3 mb-4">
+                        <p class="text-muted font-italic d-inline">Par {{ review.user }}</p>
+                        {% if user == review.user %}
+                        <p class="d-inline text-muted font-italic"> - </p>
+                        <a href="{% url 'reviews:review-update' review.id %}">[Modifier] </a>
+                        <a href="{% url 'reviews:review-delete' review.id %}" class="text-danger">[Supprimer]</a>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="row w-100 h-100 justify-content-center mt-2">
+                    <div class="col-12 col-lg-8 mb-3">
+                        <p class="text-justify mr-3">{{ review.body|linebreaksbr|safe }}</p>
+                        <p class="text-muted font-italic">{{ review.time_created|get_posted_at_display }}</p>
+                        <div class="text-right">
+                            <a href="{% url 'reviews:feed' %}" class="btn btn-primary btn-submit w-25 mt-3">Retour</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}

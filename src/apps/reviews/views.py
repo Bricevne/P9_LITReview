@@ -123,6 +123,19 @@ class ReviewCreate(CreateView):
     fields = ['headline', 'rating', 'body']
     success_url = reverse_lazy("reviews:feed")
 
+    def dispatch(self, request, *args, **kwargs):
+        handler = super().dispatch(request, *args, **kwargs)
+        print(self.kwargs['pk'])
+        if Ticket.objects.get(id=self.kwargs['pk']).related_reviews.first():
+            return redirect("reviews:feed")
+        return handler
+
+    def get_context_data(self, **kwargs):
+        ticket_id = self.kwargs['pk']
+        context = super(ReviewCreate, self).get_context_data(**kwargs)
+        context['ticket'] = Ticket.objects.get(id=ticket_id)
+        return context
+
     def form_valid(self, form):
         form.instance.user = self.request.user
         ticket = get_object_or_404(Ticket, id=self.kwargs['pk'])
@@ -144,6 +157,7 @@ class ReviewDetail(DetailView):
         if not (user == review.user or user.is_superuser or review.user.id in following):
             return redirect("reviews:feed")
         return handler
+
 
 @method_decorator(login_required, name='dispatch')
 class ReviewUpdate(UpdateView):
