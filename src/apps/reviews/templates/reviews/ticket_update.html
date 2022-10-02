@@ -1,17 +1,30 @@
 {% extends 'base.html' %}
+{% load crispy_forms_tags %}
 
 {% block title %}
-  <title>Modifier un ticket</title>
+<title>Modifier un ticket</title>
 {% endblock %}
 
 {% block content %}
-
-  <h1>Editer un ticket</h1>
-
-  <form method="POST">
-    {% csrf_token %}
-    {{ form }}
-    <input type="submit" value="Editer" class="btn btn-submit">
-  </form>
+<div class="container h-100">
+    <div class="row h-100 w-50 align-items-center justify-content-center mx-auto">
+        <div class="col-12 mt-4">
+            <h2 class="text-center mb-4">Editer un ticket</h2>
+            <form method="POST">
+                {% csrf_token %}
+                {{ form|crispy }}
+                <div class="row mt-2 mb-4">
+                    <div class="col-6 ">
+                        <button type="submit" class="btn btn-primary w-75 mt-2">Confirmer</button>
+                    </div>
+                    <div class="col-6 text-right">
+                        <a href="{% url 'reviews:ticket-detail' ticket.id %}" class="btn btn-primary w-75 mt-2">Retour</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 
 {% endblock %}
+

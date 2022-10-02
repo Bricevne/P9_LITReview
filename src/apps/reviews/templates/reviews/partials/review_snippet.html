@@ -5,7 +5,7 @@
         <h4>{% get_poster_display review.user %} posté une critique.</h4>
         <hr>
         <h2 class="card-title px-4">{{ review.headline }} - {{ review.rating }}</h2>
-        <p class="card-text px-4">{{ review.body|truncatewords:50 }}</p>
+        <p class="card-text px-4 text-justify">{{ review.body|linebreaksbr|safe|truncatewords:50 }}</p>
         <div class="px-4">
             <a href="{% url 'reviews:review-detail' review.id %}" class="btn btn-primary">Lire la critique</a>
         </div>

@@ -10,7 +10,7 @@
         {% endif %}
 
         <h2 class="card-title mt-4">{{ ticket.title }}</h2>
-        <p class="card-text">{{ ticket.description|linebreaks|safe|truncatewords:20 }}</p>
+        <p class="card-text text-justify">{{ ticket.description|linebreaksbr|safe|truncatewords:20 }}</p>
         {% if ticket.image %}
         <div class="text-center my-4">
             <img src="{{ ticket.image.url }}" alt="L'image du ticket" height="200" width="150">
@@ -32,6 +32,5 @@
             {{ ticket.time_created|get_posted_at_display }}
         </div>
         {% endif %}
-        <!--        <a href="{% url 'reviews:ticket-detail' ticket.id %}"></a>-->
     </div>
 </div>

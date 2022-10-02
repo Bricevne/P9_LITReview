@@ -1,19 +1,35 @@
 {% extends 'base.html' %}
+{% load reviews_extras %}
 
 {% block title %}
-  <title>{{ ticket.title }}</title>
+<title>{{ ticket.title }}</title>
 {% endblock %}
 
 {% block content %}
-
-    <h1>{{ ticket.title }}</h1>
-    {% if user == ticket.user %}
-        <a href="{% url 'reviews:ticket-update' ticket.id %}">Modifier</a>
-        <a href="{% url 'reviews:ticket-delete' ticket.id %}">Supprimer</a>
-    {% endif %}
-    <p>{{ ticket.description|linebreaks|safe }}</p>
-    {% if ticket.image %}
-      <img src="{{ ticket.image.url }}" alt="L'image de l'article">
-    {% endif %}
-
+<div class="container h-75">
+    <div class="row h-100 align-items-center justify-content-center">
+        <div class="col-12">
+            <h1 class="text-center mt-4">Ticket - {{ ticket.title }}</h1>
+            <div class="text-center mt-3 mb-4">
+                <p class="text-muted font-italic d-inline">Par {{ ticket.user }}</p>
+                {% if user == ticket.user %}
+                <p class="d-inline text-muted font-italic"> - </p>
+                <a href="{% url 'reviews:ticket-update' ticket.id %}">[Modifier] </a>
+                <a href="{% url 'reviews:ticket-delete' ticket.id %}" class="text-danger">[Supprimer]</a>
+                {% endif %}
+            </div>
+            <div class="row h-100 justify-content-center mt-5">
+                <div class="col-12 col-lg-8 mb-3">
+                    <p class="text-justify mr-3">{{ ticket.description|linebreaksbr|safe }}</p>
+                    <p class="text-muted font-italic">{{ ticket.time_created|get_posted_at_display }}</p>
+                </div>
+                <div class="col-12 col-lg-4 text-center">
+                    {% if ticket.image %}
+                    <img src="{{ ticket.image.url }}" alt="L'image du ticket" height="400" width="300">
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}

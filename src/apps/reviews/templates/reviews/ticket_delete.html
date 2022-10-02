@@ -1,15 +1,21 @@
 {% extends 'base.html' %}
 
 {% block title %}
-  <title>Supprimer</title>
+<title>Supprimer</title>
 {% endblock %}
 
 {% block content %}
-
-  <form method="POST">
-    {% csrf_token %}
-    <p>Etes-vous sûr de vouloir supprimer le ticket "{{ ticket.title }}" ?</p>
-    <input type="submit" value="Oui, supprimer" class="btn btn-delete">
-  </form>
+<div class="container h-75">
+    <h2 class="text-center mt-5">Suppression</h2>
+    <div class="h-50 row align-items-center justify-content-center">
+        <div class="col text-center">
+            <p>Etes-vous sûr de vouloir supprimer le ticket "{{ ticket.title }}" ?</p>
+            <form method="POST">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-primary w-25 mt-2">Oui, supprimer</button>
+            </form>
+        </div>
+    </div>
+</div>
 
 {% endblock %}
