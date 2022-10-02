@@ -10,23 +10,11 @@
 
 {% for instance in tickets_and_reviews %}
     {% if instance|model_type == 'Review' %}
-        <p>-------------------------------------</p>
-        <h1>{% get_poster_display instance.user %} posté une critique.</h1>
         {% include "reviews/partials/review_snippet.html" with review=instance %}
-        <p>-------------------------------------</p>
-
-        <h1>Ticket - {{ instance.ticket.user }}</h1>
-        {% include "reviews/partials/ticket_snippet.html" with ticket=instance.ticket %}
-        <hr>
-
     {% elif instance|model_type == 'Ticket' and instance not in tickets_with_reviews %}
 
-        <h1>{% get_poster_display instance.user %} demandé une critique.</h1>
         {% include "reviews/partials/ticket_snippet.html" with ticket=instance %}
-        <form action="{% url 'reviews:review-create' instance.id %}">
-            <button class="btn btn-submit">Créer une critique</button>
-        </form>
-        <hr>
+
 
     {% endif %}
 {% endfor %}

@@ -1,28 +1,27 @@
 {% load reviews_extras %}
-<div class="card border-strong shadow-sm w-75 mx-auto my-4">
+<div class="card border-danger border-strong shadow w-75 mx-auto my-4">
     <div class="card-body">
 
         {% if not ticket.related_reviews.first %}
-            <h2>{% get_poster_display instance.user %} demandé une critique.</h2>
+            <h4>{% get_poster_display instance.user %} demandé une critique.</h4>
+            <hr>
         {% else %}
-            <div class="card-header text-center">
-                <h2>Ticket - {{ ticket.user }}</h2>
-            </div>
+            <h4 class="card-header text-center">Ticket - {{ ticket.user }}</h4>
         {% endif %}
 
-        <h5 class="card-title">{{ ticket.title }}</h5>
+        <h2 class="card-title mt-4">{{ ticket.title }}</h2>
         <p class="card-text">{{ ticket.description|linebreaks|safe }}</p>
         {% if ticket.image %}
             <img class="card-img-bottom" src="{{ ticket.image.url }}" alt="L'image du ticket">
         {% endif %}
         {% if not ticket.related_reviews.first %}
-            <form action="{% url 'reviews:review-create' instance.id %}">
-                <button class="btn btn-primary btn-submit">Créer une critique</button>
-            </form>
+            <div class="text-right">
+                <a href="{% url 'reviews:review-create' instance.id %}" class="btn btn-primary w-25 my-2">Créer une critique</a>
+            </div>
             <div class="card-footer text-center text-muted">
                 {{ ticket.time_created|get_posted_at_display }}
             </div>
         {% endif %}
-        <a href="{% url 'reviews:ticket-detail' ticket.id %}"></a>
+<!--        <a href="{% url 'reviews:ticket-detail' ticket.id %}"></a>-->
     </div>
 </div>

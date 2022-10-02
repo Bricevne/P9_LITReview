@@ -27,7 +27,6 @@
                     {% include "reviews/partials/review_snippet.html" with review=instance %}
 
                 {% endif %}
-
             {% elif instance|model_type == 'Ticket' and not instance.related_reviews.first %}
                 {% if instance.user.id in following or user_id == instance.user.id %}
 
@@ -40,4 +39,5 @@
     </div>
     {% endfor %}
 </div>
+
 {% endblock content %}
