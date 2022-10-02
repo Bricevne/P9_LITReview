@@ -14,10 +14,10 @@
                 {% csrf_token %}
                 {{ form|crispy }}
                 <div class="row">
-                    <div class="col-6 ">
+                    <div class="col-12 text-center col-lg-6 text-lg-left">
                 <button type="submit" class="btn btn-primary w-75 mt-2">S'inscrire</button>
                     </div>
-                    <div class="col-6 text-right">
+                    <div class="col-12 text-center mb-3 col-lg-6 text-lg-right mb-lg-0">
                 <a href="{% url 'accounts:login' %}" class="btn btn-primary w-75 mt-2">Retour</a>
                     </div>
                 </div>

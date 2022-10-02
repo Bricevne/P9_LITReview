@@ -8,7 +8,7 @@
 {% block content %}
 <div class="container h-100">
     <div class="row h-100 justify-content-center align-items-center">
-        <div class="col-12 col-lg-6">
+        <div class="col-12 mb-4 col-lg-6 mb-lg-0">
             <h2 class="text-center mb-4">Inscrivez-vous maintenant</h2>
             <form action="{% url 'accounts:signup' %}" class="text-center">
                 <button class="btn btn-primary btn-submit w-50">S'inscrire</button>
@@ -19,7 +19,9 @@
             <form method="POST">
                 {% csrf_token %}
                 {{ form|crispy }}
-                <button type="submit" class="btn btn-primary w-50">Se connecter</button>
+                <div class="text-center text-lg-left">
+                    <button type="submit" class="btn btn-primary w-50">Se connecter</button>
+                </div>
             </form>
         </div>
     </div>

@@ -13,16 +13,16 @@
         <p class="card-text text-justify">{{ ticket.description|linebreaksbr|safe|truncatewords:20 }}</p>
         {% if ticket.image %}
         <div class="text-center my-4">
-            <img src="{{ ticket.image.url }}" alt="L'image du ticket" height="200" width="150">
+            <img src="{{ ticket.image.url }}" alt="L'image du ticket" height="200" width="150" class="img-fluid">
         </div>
         {% endif %}
         {% if not ticket.related_reviews.first %}
         <div class="row">
-            <div class="col-6">
+            <div class="col-12 text-center col-lg-6 text-lg-left">
                 <a href="{% url 'reviews:ticket-detail' ticket.id %}" class="btn btn-primary w-50 my-2">Lire le
                     ticket</a>
             </div>
-            <div class="col-6 text-right">
+            <div class="col-12 text-center col-lg-6 text-lg-right">
                 <a href="{% url 'reviews:review-create' ticket.id %}" class="btn btn-primary w-50 my-2">Créer une
                     critique</a>
             </div>
