@@ -1,21 +1,24 @@
 {% extends 'base.html' %}
 {% load reviews_extras %}
 {% block title %}
-<title>Flux</title>
+<title>Posts</title>
 {% endblock title %}
 
 {% block content %}
-<h1>Vos posts</h1>
 
-
-{% for instance in tickets_and_reviews %}
-    {% if instance|model_type == 'Review' %}
-        {% include "reviews/partials/review_snippet.html" with review=instance %}
-    {% elif instance|model_type == 'Ticket' and instance not in tickets_with_reviews %}
-
-        {% include "reviews/partials/ticket_snippet.html" with ticket=instance %}
-
-
-    {% endif %}
-{% endfor %}
+<div class="container h-100">
+    <h2 class="text-center mt-4">Vos posts</h2>
+    {% for instance in tickets_and_reviews %}
+    <div class="row align-items-center justify-content-center">
+        <div class="col-12">
+            {% if instance|model_type == 'Review' %}
+            {% include "reviews/partials/review_snippet.html" with review=instance %}
+            {% elif instance|model_type == 'Ticket' and instance not in tickets_with_reviews %}
+            {% include "reviews/partials/ticket_snippet.html" with ticket=instance %}
+            {% endif %}
+        </div>
+    </div>
+    {% endfor %}
+</div>
 {% endblock content %}
+
