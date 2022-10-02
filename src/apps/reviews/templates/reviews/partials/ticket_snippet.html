@@ -1,11 +1,28 @@
 {% load reviews_extras %}
-<div class="ticket">
-    <a href="{% url 'reviews:ticket-detail' ticket.id %}">
-        <h1>{{ ticket.title }}</h1>
-        <p>{{ ticket.time_created|get_posted_at_display }}</p>
-        <p>{{ ticket.description|linebreaks|safe }}</p>
-        {% if ticket.image %}
-        <img src="{{ ticket.image.url }}" alt="L'image de l'article">
+<div class="card border-strong shadow-sm w-75 mx-auto my-4">
+    <div class="card-body">
+
+        {% if not ticket.related_reviews.first %}
+            <h2>{% get_poster_display instance.user %} demandé une critique.</h2>
+        {% else %}
+            <div class="card-header text-center">
+                <h2>Ticket - {{ ticket.user }}</h2>
+            </div>
         {% endif %}
-    </a>
+
+        <h5 class="card-title">{{ ticket.title }}</h5>
+        <p class="card-text">{{ ticket.description|linebreaks|safe }}</p>
+        {% if ticket.image %}
+            <img class="card-img-bottom" src="{{ ticket.image.url }}" alt="L'image du ticket">
+        {% endif %}
+        {% if not ticket.related_reviews.first %}
+            <form action="{% url 'reviews:review-create' instance.id %}">
+                <button class="btn btn-primary btn-submit">Créer une critique</button>
+            </form>
+            <div class="card-footer text-center text-muted">
+                {{ ticket.time_created|get_posted_at_display }}
+            </div>
+        {% endif %}
+        <a href="{% url 'reviews:ticket-detail' ticket.id %}"></a>
+    </div>
 </div>

@@ -1,9 +1,17 @@
 {% load reviews_extras %}
-<div class="review">
-    <a href="{% url 'reviews:review-detail' review.id %}">
-        <h1>{{ review.headline }}</h1>
-        <p>{{ review.time_created|get_posted_at_display }}</p>
-        <p>{{ review.rating }}</p>
-        <p>{{ review.body }}</p>
-    </a>
+<div class="card border-strong shadow-sm w-75 mx-auto my-4">
+    <div class="card-body">
+
+        <h2>{% get_poster_display review.user %} posté une critique.</h2>
+
+        <h5 class="card-title">{{ review.headline }} - {{ review.rating }}</h5>
+        <p class="card-text">{{ review.body|linebreaks|safe }}</p>
+
+        <div class="mt-5">
+            {% include "reviews/partials/ticket_snippet.html" with ticket=review.ticket %}
+        </div>
+        <div class="card-footer text-muted text-center">
+            {{ review.time_created|get_posted_at_display }}
+        </div>
+    </div>
 </div>

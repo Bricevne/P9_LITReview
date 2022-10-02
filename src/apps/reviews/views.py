@@ -27,7 +27,6 @@ class IndexList(ListView):
             reverse=True
         )
         context['tickets_and_reviews'] = tickets_and_reviews
-        context['tickets_with_reviews'] = [review.ticket for review in Review.objects.all()]
         context['following'] = UserFollows.objects.filter(user=user).values_list("followed_user", flat=True)
         context['user_id'] = user.id
 
