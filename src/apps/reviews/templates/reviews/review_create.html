@@ -1,16 +1,18 @@
 {% extends 'base.html' %}
+{% load crispy_forms_tags %}
 
 {% block title %}
   <title>Ajouter une critique</title>
 {% endblock %}
 
 {% block content %}
-
+<p>Vous êtes en train de poster en réponse à</p>
+{% include "reviews/partials/ticket_snippet.html" with ticket=review.ticket %}
   <h1>Ajouter une critique</h1>
 
   <form method="POST">
     {% csrf_token %}
-    {{ form.as_p }}
+    {{ form|crispy }}
     <input type="submit" value="Ajouter" class="btn btn-submit">
   </form>
 
