@@ -25,13 +25,12 @@
                 {% if instance.user.id in following or instance.ticket.user.id in following or user_id == instance.user.id or user_id == instance.ticket.user.id %}
 
                     {% include "reviews/partials/review_snippet.html" with review=instance %}
-
                 {% endif %}
             {% elif instance|model_type == 'Ticket' and not instance.related_reviews.first %}
                 {% if instance.user.id in following or user_id == instance.user.id %}
-
+                <div class="w-75 mx-auto">
                     {% include "reviews/partials/ticket_snippet.html" with ticket=instance %}
-
+                </div>
                 {% endif %}
             {% endif %}
 
