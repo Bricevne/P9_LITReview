@@ -7,33 +7,37 @@ reviews about books and articles.
 
 Clone the repository on your computer.
 
-`git clone https://github.com/Bricevne/P9_LITReview.git` 
+```
+git clone https://github.com/Bricevne/P9_LITReview.git
+```
 
 Set your virtual environment under python 3.10
 
-Create the virtual environment and install the dependencies:
-
-`python3 -m venv venv` 
-
-Activate the virtual environment:
-
-`source venv/bin/activate`
-
-Install the necessary libraries in the virtual environment:
-
-`pip install -r requirements.txt`
+```
+python3 -m venv venv # Create the virtual environment and install the dependencies
+source venv/bin/activate # Activate the virtual environment
+```
 
 Create a file where you'll put the django secret key:
 
-`touch .env`
+```
+touch .env # File for environment variables
+```
+
+Insert your django secret key in the .env file
+
 `DJANGO_SECRET_KEY="DJANGO_SECRET_KEY"`
+
+
 
 ## Usage
 
 Run the following code to access the web application:
 
-`python manage.py migrate # create the migrations`
-`python manage.py runserver # start the local server`
+```
+python manage.py migrate # Create the migrations
+python manage.py runserver # Start the local server
+```
 
 ## License
 
