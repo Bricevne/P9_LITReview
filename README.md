@@ -2,6 +2,10 @@
 
 This project is about developing a new web application enabling users to ask for or publish 
 reviews about books and articles.
+It also offers:
+* an authentication app for authentication purposes
+* a subscription app which permits users to follow others in order to read their tickets and
+reviews in their own feed
 
 ## Installation
 
