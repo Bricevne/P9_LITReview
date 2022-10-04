@@ -29,7 +29,7 @@
             {% elif instance|model_type == 'Ticket' and not instance.related_reviews.first %}
                 {% if instance.user.id in following or user_id == instance.user.id %}
                 <div class="w-75 mx-auto">
-                    {% include "reviews/partials/ticket_snippet.html" with ticket=instance %}
+                    {% include "reviews/partials/ticket_snippet.html" with ticket=instance display_button="true" %}
                 </div>
                 {% endif %}
             {% endif %}

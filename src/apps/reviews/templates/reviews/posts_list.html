@@ -14,7 +14,9 @@
             {% if instance|model_type == 'Review' %}
             {% include "reviews/partials/review_snippet.html" with review=instance %}
             {% elif instance|model_type == 'Ticket' and instance not in tickets_with_reviews %}
-            {% include "reviews/partials/ticket_snippet.html" with ticket=instance %}
+            <div class="w-75 mx-auto">
+                {% include "reviews/partials/ticket_snippet.html" with ticket=instance display_button="true" %}
+            </div>
             {% endif %}
         </div>
     </div>

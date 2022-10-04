@@ -12,7 +12,7 @@
         </div>
 
         <div class="mt-5">
-            {% include "reviews/partials/ticket_snippet.html" with ticket=review.ticket %}
+            {% include "reviews/partials/ticket_snippet.html" with ticket=review.ticket display_button="false" %}
         </div>
         <div class="card-footer text-muted text-center">
             {{ review.time_created|get_posted_at_display }}

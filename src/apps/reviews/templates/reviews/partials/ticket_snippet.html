@@ -22,12 +22,12 @@
                     ticket</a>
             </div>
             {% if not ticket.related_reviews.first %}
-
+            {% if display_button == "true" %}
             <div class="col-12 text-center col-lg-6 text-lg-right">
                 <a href="{% url 'reviews:review-create' ticket.id %}" class="btn btn-primary w-50 my-2">Créer une
                     critique</a>
             </div>
-
+            {% endif %}
         </div>
         <div class="card-footer text-center text-muted">
             {{ ticket.time_created|get_posted_at_display }}
