@@ -5,22 +5,22 @@ reviews about books and articles.
 
 ## Installation
 
-Clone the repository on your computer.
+Clone [the repository](https://github.com/Bricevne/P9_LITReview) on your computer.
 
 ```
 git clone https://github.com/Bricevne/P9_LITReview.git
 ```
 
-Set your virtual environment under python 3.10
+Set your virtual environment under [python 3.10](https://www.python.org/downloads/release/python-3100/)
 
-```
+```bash
 python3 -m venv venv # Create the virtual environment and install the dependencies
 source venv/bin/activate # Activate the virtual environment
 ```
 
 Create a file where you'll put the django secret key:
 
-```
+```bash
 touch .env # File for environment variables
 ```
 
@@ -34,11 +34,11 @@ Insert your django secret key in the .env file
 
 Run the following code to access the web application:
 
-```
+```bash
 python manage.py migrate # Create the migrations
 python manage.py runserver # Start the local server
 ```
 
 ## License
 
-MIT
+[MIT](https://choosealicense.com/licenses/mit/)
