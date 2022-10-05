@@ -3,6 +3,7 @@ from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
 from django.views.generic import ListView, CreateView, DetailView, UpdateView, DeleteView
+from django.core.exceptions import PermissionDenied
 
 from apps.reviews.models import Ticket, Review
 from itertools import chain
@@ -79,7 +80,7 @@ class TicketDetail(DetailView):
         ticket = self.get_object()
         following = list(UserFollows.objects.filter(user=user).values_list("followed_user", flat=True))
         if not (user == ticket.user or user.is_superuser or ticket.user.id in following):
-            return redirect("reviews:feed")
+            raise PermissionDenied
         return handler
 
 
@@ -96,7 +97,7 @@ class TicketUpdate(UpdateView):
         user = request.user
         ticket = self.get_object()
         if not (ticket.user == user or user.is_superuser):
-            return redirect("reviews:feed")
+            raise PermissionDenied
         return handler
 
 
@@ -112,7 +113,7 @@ class TicketDelete(DeleteView):
         handler = super().dispatch(request, *args, **kwargs)
         user = request.user
         if not (ticket.user == user or user.is_superuser):
-            return redirect("reviews:feed")
+            raise PermissionDenied
         return handler
 
 
@@ -125,7 +126,6 @@ class ReviewCreate(CreateView):
 
     def dispatch(self, request, *args, **kwargs):
         handler = super().dispatch(request, *args, **kwargs)
-        print(self.kwargs['pk'])
         if Ticket.objects.get(id=self.kwargs['pk']).related_reviews.first():
             return redirect("reviews:feed")
         return handler
@@ -155,7 +155,7 @@ class ReviewDetail(DetailView):
         review = self.get_object()
         following = list(UserFollows.objects.filter(user=user).values_list("followed_user", flat=True))
         if not (user == review.user or user.is_superuser or review.user.id in following):
-            return redirect("reviews:feed")
+            raise PermissionDenied
         return handler
 
 
@@ -172,7 +172,7 @@ class ReviewUpdate(UpdateView):
         user = request.user
         review = self.get_object()
         if not (review.user == user or user.is_superuser):
-            return redirect("reviews:feed")
+            raise PermissionDenied
         return handler
 
 
@@ -188,7 +188,7 @@ class ReviewDelete(DeleteView):
         handler = super().dispatch(request, *args, **kwargs)
         user = request.user
         if not (review.user == user or user.is_superuser):
-            return redirect("reviews:feed")
+            raise PermissionDenied
         return handler
 
 
