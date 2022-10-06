@@ -20,15 +20,7 @@
 
             <form method="POST" enctype="multipart/form-data">
                 {% csrf_token %}
-                {{ form|crispy }}
-                <div class="row mt-2 mb-4">
-                    <div class="col-12 col-lg-6 text-center text-lg-left">
-                        <button type="submit" class="btn btn-primary w-75 mt-2">Ajouter</button>
-                    </div>
-                    <div class="col-12 col-lg-6 text-center text-lg-right">
-                        <input class="btn btn-primary w-75 mt-3" type="button" value="Retour" onclick="history.go(-1)">
-                    </div>
-                </div>
+                {% crispy form %}
             </form>
         </div>
     </div>

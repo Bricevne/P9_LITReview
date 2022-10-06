@@ -18,7 +18,9 @@
                 <div class="col-12">
                     <h1 class="text-center mt-4">Critique - {{ review.headline }}</h1>
                     <div class="text-center mt-3 mb-4">
-                        <p class="text-muted font-italic d-inline">Par {{ review.user }}</p>
+                        <p class="text-muted font-italic d-inline">Par {{ review.user }} -
+                            {% include "reviews/partials/star_rating_snippet.html" with rating=review.rating %}
+                        </p>
                         {% if user == review.user %}
                         <p class="d-inline text-muted font-italic"> - </p>
                         <a href="{% url 'reviews:review-update' review.id %}">[Modifier] </a>
@@ -39,4 +41,5 @@
         </div>
     </div>
 </div>
-    {% endblock %}
+
+{% endblock %}

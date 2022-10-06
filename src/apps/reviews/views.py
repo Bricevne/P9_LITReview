@@ -5,6 +5,7 @@ from django.utils.decorators import method_decorator
 from django.views.generic import ListView, CreateView, DetailView, UpdateView, DeleteView
 from django.core.exceptions import PermissionDenied
 
+from apps.reviews.forms import ReviewForm
 from apps.reviews.models import Ticket, Review
 from itertools import chain
 
@@ -120,8 +121,8 @@ class TicketDelete(DeleteView):
 @method_decorator(login_required, name='dispatch')
 class ReviewCreate(CreateView):
     model = Review
+    form_class = ReviewForm
     template_name = "reviews/review_create.html"
-    fields = ['headline', 'rating', 'body']
     success_url = reverse_lazy("reviews:feed")
 
     def dispatch(self, request, *args, **kwargs):
@@ -162,8 +163,8 @@ class ReviewDetail(DetailView):
 @method_decorator(login_required, name='dispatch')
 class ReviewUpdate(UpdateView):
     model = Review
+    form_class = ReviewForm
     context_object_name = "review"
-    fields = ['headline', 'rating', 'body']
     template_name = "reviews/review_update.html"
     success_url = reverse_lazy("reviews:feed")
 

@@ -4,7 +4,9 @@
 
         <h4>{% get_poster_display review.user %} posté une critique.</h4>
         <hr>
-        <h2 class="card-title px-4">{{ review.headline }} - {{ review.rating }}</h2>
+        <h2 class="card-title px-4">{{ review.headline }} -
+            {% include "reviews/partials/star_rating_snippet.html" with rating=instance.rating %}
+        </h2>
         <p class="card-text px-4 text-justify">{{ review.body|linebreaksbr|safe|truncatewords:50 }}</p>
 
         <div class="px-4">
