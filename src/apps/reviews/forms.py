@@ -1,8 +1,9 @@
 from crispy_forms.helper import FormHelper
-from crispy_forms.layout import Layout, Div, Submit, Button, HTML
+from crispy_forms.layout import Layout, Div, Submit, HTML
 from django import forms
-from apps.reviews.models import Review
-from crispy_forms.bootstrap import InlineRadios, FormActions
+from apps.reviews.models import Review, Ticket
+from crispy_forms.bootstrap import InlineRadios
+from betterforms.multiform import MultiModelForm
 
 
 class ReviewForm(forms.ModelForm):
@@ -42,3 +43,16 @@ class ReviewForm(forms.ModelForm):
                 css_class="row mt-2 mb-4"
             ),
         )
+
+
+class TicketForm(forms.ModelForm):
+    class Meta:
+        model = Ticket
+        fields = ['title', 'description', 'image']
+
+
+class TicketReviewMultiForm(MultiModelForm):
+    form_classes = {
+        'ticket': TicketForm,
+        'review': ReviewForm,
+    }

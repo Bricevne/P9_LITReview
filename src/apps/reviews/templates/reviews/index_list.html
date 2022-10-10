@@ -13,8 +13,10 @@
                 <button class="btn btn-primary btn-submit w-75">Demander une critique</button>
             </form>
         </div>
-        <div class="col-12 col-lg-4 text-center">
-            <button class="btn btn-primary btn-submit w-75">Créer une critique</button>
+        <div class="col-12 col-lg-4 text-center  mb-3 mb-lg-0">
+            <form action="{% url 'reviews:ticket-review-create' %}">
+                <button class="btn btn-primary btn-submit w-75">Créer une critique</button>
+            </form>
         </div>
     </div>
 
@@ -22,16 +24,16 @@
     <div class="row align-items-center justify-content-center">
         <div class="col-12">
             {% if instance|model_type == 'Review' %}
-                {% if instance.user.id in following or instance.ticket.user.id in following or user_id == instance.user.id or user_id == instance.ticket.user.id %}
+            {% if instance.user.id in following or instance.ticket.user.id in following or user_id == instance.user.id or user_id == instance.ticket.user.id %}
 
-                    {% include "reviews/partials/review_snippet.html" with review=instance %}
-                {% endif %}
+            {% include "reviews/partials/review_snippet.html" with review=instance %}
+            {% endif %}
             {% elif instance|model_type == 'Ticket' and not instance.related_reviews.first %}
-                {% if instance.user.id in following or user_id == instance.user.id %}
-                <div class="w-75 mx-auto">
-                    {% include "reviews/partials/ticket_snippet.html" with ticket=instance display_button="true" %}
-                </div>
-                {% endif %}
+            {% if instance.user.id in following or user_id == instance.user.id %}
+            <div class="w-75 mx-auto">
+                {% include "reviews/partials/ticket_snippet.html" with ticket=instance display_button="true" %}
+            </div>
+            {% endif %}
             {% endif %}
 
         </div>

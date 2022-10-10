@@ -2,10 +2,10 @@ from django.contrib.auth.decorators import login_required, user_passes_test
 from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
-from django.views.generic import ListView, CreateView, DetailView, UpdateView, DeleteView
+from django.views.generic import ListView, CreateView, DetailView, UpdateView, DeleteView, FormView
 from django.core.exceptions import PermissionDenied
 
-from apps.reviews.forms import ReviewForm
+from apps.reviews.forms import ReviewForm, TicketForm, TicketReviewMultiForm
 from apps.reviews.models import Ticket, Review
 from itertools import chain
 
@@ -193,17 +193,17 @@ class ReviewDelete(DeleteView):
         return handler
 
 
+class TicketReviewCreate(CreateView):
+    form_class = TicketReviewMultiForm
+    success_url = reverse_lazy('reviews:feed')
+    template_name = 'reviews/ticket_review_create.html'
 
-# @method_decorator(login_required, name='dispatch')
-# class TicketReviewCreate(CreateView):
-#     model = Review
-#     template_name = "reviews/review_create.html"
-#     fields = ['headline', 'rating', 'body']
-#     success_url = reverse_lazy("reviews:feed")
-#
-#     def form_valid(self, form):
-#         form.instance.user = self.request.user
-#         ticket = get_object_or_404(Ticket, id=self.kwargs['pk'])
-#         form.instance.ticket = ticket
-#         return super().form_valid(form)
-#
+    def form_valid(self, form):
+        ticket = form['ticket'].save(commit=False)
+        ticket.user = self.request.user
+        ticket.save()
+        review = form['review'].save(commit=False)
+        review.user = self.request.user
+        review.ticket = ticket
+        review.save()
+        return redirect("reviews:feed")

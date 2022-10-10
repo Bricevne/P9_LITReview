@@ -1,6 +1,6 @@
 from django.urls import path
 from apps.reviews.views import IndexList, TicketCreate, ReviewCreate, TicketDetail, TicketUpdate, ReviewDetail, \
-    ReviewUpdate, ReviewDelete, TicketDelete, PostList
+    ReviewUpdate, ReviewDelete, TicketDelete, PostList, TicketReviewCreate
 
 app_name = "reviews"
 
@@ -15,5 +15,5 @@ urlpatterns = [
     path("tickets/reviews/<int:pk>/", ReviewDetail.as_view(), name="review-detail"),
     path("tickets/reviews/<int:pk>/update/", ReviewUpdate.as_view(), name="review-update"),
     path("tickets/reviews/<int:pk>/delete/", ReviewDelete.as_view(), name="review-delete"),
-    # path("tickets/reviews/create/", TicketReviewCreate.as_view(), name="ticket-review-delete"),
+    path("tickets/reviews/create/", TicketReviewCreate.as_view(), name="ticket-review-create"),
 ]
