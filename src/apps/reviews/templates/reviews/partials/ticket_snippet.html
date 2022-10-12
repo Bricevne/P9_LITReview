@@ -1,5 +1,5 @@
 {% load reviews_extras %}
-<div class="card border-danger border-strong shadow w-100 my-4">
+<div class="card border-danger border-strong shadow w-100 my-5">
     <div class="card-body">
 
         {% if not ticket.related_reviews.first %}
@@ -28,7 +28,9 @@
                     critique</a>
             </div>
             {% endif %}
+            {% endif %}
         </div>
+        {% if not ticket.related_reviews.first %}
         <div class="card-footer text-center text-muted">
             {{ ticket.time_created|get_posted_at_display }}
         </div>
