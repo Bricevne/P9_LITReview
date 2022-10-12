@@ -10,13 +10,11 @@
     <h2 class="text-center mt-4">Vos posts</h2>
     {% for instance in tickets_and_reviews %}
     <div class="row align-items-center justify-content-center">
-        <div class="col-12">
+        <div class="col-12 mx-auto">
             {% if instance|model_type == 'Review' %}
             {% include "reviews/partials/review_snippet.html" with review=instance %}
             {% elif instance|model_type == 'Ticket' and instance not in tickets_with_reviews %}
-            <div class="w-75 mx-auto">
-                {% include "reviews/partials/ticket_snippet.html" with ticket=instance display_button="true" %}
-            </div>
+            {% include "reviews/partials/ticket_snippet.html" with ticket=instance display_button="true" %}
             {% endif %}
         </div>
     </div>

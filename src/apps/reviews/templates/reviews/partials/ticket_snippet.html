@@ -1,4 +1,5 @@
 {% load reviews_extras %}
+
 <div class="card border-danger border-strong shadow w-100 my-5">
     <div class="card-body">
 
@@ -13,7 +14,8 @@
         <p class="card-text text-justify">{{ ticket.description|linebreaksbr|safe }}</p>
         {% if ticket.image %}
         <div class="text-center my-4">
-            <img src="{{ ticket.image.url }}" alt="L'image du ticket" height="200" width="150" class="img-fluid">
+            <img src="{{ ticket.image.url }}" alt="L'image du ticket" height="200" width="150"
+                 class="img-fluid">
         </div>
         {% endif %}
         <div class="row">
@@ -24,7 +26,8 @@
             {% if not ticket.related_reviews.first %}
             {% if display_button == "true" %}
             <div class="col-12 text-center col-lg-6 text-lg-right">
-                <a href="{% url 'reviews:review-create' ticket.id %}" class="btn btn-primary w-50 my-2">Créer une
+                <a href="{% url 'reviews:review-create' ticket.id %}" class="btn btn-primary w-50 my-2">Créer
+                    une
                     critique</a>
             </div>
             {% endif %}
