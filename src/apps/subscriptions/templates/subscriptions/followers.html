@@ -12,8 +12,14 @@
         <div class="col">
             <form method="POST">
                 {% csrf_token %}
-                {{ form|crispy }}
-                <button type="submit" class="btn btn-primary w-25 mt-2">Ajouter</button>
+                <div class="row">
+                    <div class="col-12 col-lg-10">
+                        {{ form|crispy }}
+                    </div>
+                    <div class="col-12 col-lg-2 mt-1 mt-lg-4">
+                        <button type="submit" class="w-100 mt-2 btn btn-primary">Ajouter</button>
+                    </div>
+                </div>
             </form>
         </div>
     </div>
