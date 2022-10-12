@@ -12,8 +12,8 @@ urlpatterns = [
     path("tickets/<int:pk>/update", TicketUpdate.as_view(), name="ticket-update"),
     path("tickets/<int:pk>/delete/", TicketDelete.as_view(), name="ticket-delete"),
     path("tickets/<int:pk>/reviews/create/", ReviewCreate.as_view(), name="review-create"),
-    path("tickets/reviews/<int:pk>/", ReviewDetail.as_view(), name="review-detail"),
-    path("tickets/reviews/<int:pk>/update/", ReviewUpdate.as_view(), name="review-update"),
-    path("tickets/reviews/<int:pk>/delete/", ReviewDelete.as_view(), name="review-delete"),
+    path("reviews/<int:pk>/", ReviewDetail.as_view(), name="review-detail"),
+    path("reviews/<int:pk>/update/", ReviewUpdate.as_view(), name="review-update"),
+    path("reviews/<int:pk>/delete/", ReviewDelete.as_view(), name="review-delete"),
     path("tickets/reviews/create/", TicketReviewCreate.as_view(), name="ticket-review-create"),
 ]
