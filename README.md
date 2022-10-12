@@ -24,6 +24,7 @@ Set your virtual environment under [python 3.10](https://www.python.org/download
 ```bash
 python3 -m venv venv # Create the virtual environment and install the dependencies
 source venv/bin/activate # Activate the virtual environment
+pip install -r requirements.txt # Install the dependencies
 ```
 
 Create a file where you'll put the django secret key:
@@ -35,8 +36,6 @@ touch .env # File for environment variables
 Insert your django secret key in the .env file
 
 `DJANGO_SECRET_KEY="DJANGO_SECRET_KEY"`
-
-
 
 ## Usage
 
