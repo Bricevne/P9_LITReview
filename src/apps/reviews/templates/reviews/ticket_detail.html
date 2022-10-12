@@ -19,27 +19,26 @@
                 {% endif %}
             </div>
         </div>
-        <div class="row w-100 justify-content-center mt-5">
+        <div class="row w-100 justify-content-center mt-4">
+            <div class="col-12 mb-5 col-lg-4 mb-lg-0 text-center ">
+                {% if ticket.image %}
+                <img src="{{ ticket.image.url }}" alt="L'image du ticket" height="400" width="300">
+                {% endif %}
+            </div>
             <div class="col-12 w-100 col-lg-8 mb-3">
                 <p class="text-justify mr-3">{{ ticket.description|linebreaksbr|safe }}</p>
                 <p class="text-muted font-italic">{{ ticket.time_created|get_posted_at_display }}</p>
                 <div class="row justify-content-center">
-                    <div class="col-12 w-100 col-lg-6 text-center text-lg-left">
+                    <div class="col-12 col-lg-6 text-center text-lg-left">
                         {% if not ticket.related_reviews.first %}
-                        <a href="{% url 'reviews:review-create' ticket.id %}" class="btn btn-primary btn-submit mt-3">Créer
+                        <a href="{% url 'reviews:review-create' ticket.id %}" class="btn w-50 btn-primary btn-submit mt-3">Créer
                             une critique</a>
                         {% endif %}
                     </div>
-                    <div class="col-12 col-lg-6 w-50 text-center text-lg-right">
+                    <div class="col-12 col-lg-6 w-100 text-center text-lg-right">
                         <a href="{% url 'reviews:feed' %}" class="btn btn-primary w-50 mt-3">Retour</a>
                     </div>
                 </div>
-            </div>
-
-            <div class="col-12 col-lg-4 text-center">
-                {% if ticket.image %}
-                <img src="{{ ticket.image.url }}" alt="L'image du ticket" height="400" width="300">
-                {% endif %}
             </div>
         </div>
     </div>
